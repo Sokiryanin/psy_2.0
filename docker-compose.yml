@@ -1,0 +1,89 @@
+services:
+  wordpress:
+    # Було: latest. Стало: зафіксована версія WP + PHP.
+    # Перед застосуванням перевір актуальний стабільний тег: https://hub.docker.com/_/wordpress/tags
+    image: wordpress:6.8-php8.3-apache
+    container_name: wordpress
+    ports:
+      - '8080:80'
+    # Було: restart: always (контейнер стартував із системою завжди)
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      # Креденшли тепер із .env
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      # НОВЕ: режим розробки
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_DEBUG_LOG', true );
+        define( 'WP_DEBUG_DISPLAY', true );
+        define( 'WP_ENVIRONMENT_TYPE', 'development' );
+        define( 'SCRIPT_DEBUG', true );
+    volumes:
+      - ./backend/wordpress:/var/www/html
+      - ./src/assets/img:/var/www/html/wp-content/themes/fls-theme/assets/img
+      - ./src/wordpress/fls-theme:/var/www/html/wp-content/themes/fls-theme
+      - ./src/wordpress/fls-plugin:/var/www/html/wp-content/plugins/fls-plugin
+      - ./template_modules/assets/php.ini:/usr/local/etc/php/conf.d/php.ini
+    # НОВЕ: WordPress чекає, поки база реально готова
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - wordpress_network
+
+  db:
+    # Було: mysql:5.7 (EOL з 2023). Стало: LTS-лінійка з підтримкою до 2032.
+    image: mysql:8.4
+    container_name: wordpress_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./backend/database:/var/lib/mysql
+    # НОВЕ: перевірка готовності бази
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'mysqladmin',
+          'ping',
+          '-h',
+          'localhost',
+          '-u',
+          'root',
+          '-p${DB_ROOT_PASSWORD}'
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - wordpress_network
+
+  phpmyadmin:
+    # Було: latest
+    image: phpmyadmin:5.2
+    container_name: wordpress_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      # Прибрано MYSQL_ROOT_PASSWORD — phpMyAdmin її не використовує
+    ports:
+      - '8081:80'
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - wordpress_network
+
+# Прибрано секцію volumes (wordpress_data, db_data) — вони ніде не використовувалися.
+networks:
+  wordpress_network:
+    driver: bridge
