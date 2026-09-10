@@ -1,5 +1,64 @@
 .header {
-	// .header__container
-	&__container {
-	}
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  isolation: isolate;
+  transform: translateZ(0);
+  will-change: transform;
+  //   background-color: rgba(250, 250, 248, 0.85);
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  animation: header-appear 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  &--scrolled {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @media (max-width: toEm($tablet)) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  // .header__container
+
+  &__container {
+    width: 100%;
+    @media (max-width: toEm($mobile)) {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  // .header__body
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // .header__button
+
+  &__btn.btn {
+    @media (max-width: toEm($mobile)) {
+      display: none;
+    }
+  }
 }

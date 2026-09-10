@@ -1,0 +1,98 @@
+// ═══════════════════════════════════════════════════════════════
+//  MOBILEBAR — липка панель дії внизу екрана
+//  Показується тільки на мобільних, у парі з .header__btn,
+//  який на цій же ширині ховається.
+
+// Щоб позначити зону, де панель зайва, додайте атрибут на відповідну секцію:
+// <section id="contacts" data-fls-mobilebar-hide class="contacts">
+// ═══════════════════════════════════════════════════════════════
+
+.mobilebar {
+  display: none;
+
+  @media (max-width: toEm($mobile)) {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 150;
+    display: block;
+
+    padding: toRem(10) toRem(15);
+    // Запас під домашню смугу iPhone
+    padding-bottom: calc(#{toRem(10)} + env(safe-area-inset-bottom, 0px));
+
+    background-color: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border);
+
+    // Ховається, поки видно hero: там уже є та сама кнопка.
+    // Атрибут знімає скрипт.
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+    &[data-fls-mobilebar-visible] {
+      transform: none;
+    }
+  }
+
+  // .mobilebar__inner
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+  }
+
+  // .mobilebar__btn
+
+  &__btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  // .mobilebar__icon
+
+  &__icon {
+    flex: 0 0 toRem(52);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(52);
+    height: toRem(52);
+    border-radius: var(--r-md);
+    color: var(--sage);
+    background-color: var(--sage-soft);
+    box-shadow: inset 0 0 0 1px var(--sage);
+    transition: background-color 0.25s ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: 2px;
+    }
+
+    &:active {
+      background-color: var(--sage);
+      color: #fff;
+    }
+
+    svg {
+      width: toRem(24);
+      height: toRem(24);
+    }
+  }
+}
+
+// Запас знизу, щоб панель не перекривала кінець футера
+@media (max-width: toEm($mobile)) {
+  .footer {
+    padding-bottom: calc(#{toRem(88)} + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobilebar {
+    transition: none;
+  }
+}

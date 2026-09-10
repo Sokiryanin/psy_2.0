@@ -1,9 +1,39 @@
 :root {
-	/* Шрифт за замовчуванням */
-	--font-family: "Arial", sans-serif;
-	/* Розмір шрифту за замовченням (де 16 - розмір шрифту за замовчуванням з макету)  */
-	--font-size: 16px;
-	/* Основні кольори */
-	--main-color: #000;
-	/* --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+  /* ── Шрифти ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+
+  /* аліаси під конвенцію збірки */
+  --font-family: var(--font-sans);
+  --font-secondary: var(--font-serif);
+  --font-size: 16px;
+
+  /* ── Поверхні ── */
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface-alt: #f5f2ec;
+
+  /* ── Акцент ── */
+  --sage: #6b2e37;
+  --sage-hover: #3e1319;
+  --sage-soft: rgba(107, 46, 55, 0.08);
+
+  /* ── Текст ── */
+  --ink: #1c1c1a;
+  --ink-soft: #6b6b66;
+  --main-color: var(--ink);
+
+  /* ── Межі ── */
+  --border: #eae5dd;
+  --border-soft: #f0ebe3;
+
+  /* ── Тіні ── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 32px rgba(28, 28, 26, 0.06);
+
+  /* ── Радіуси ── */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
 }

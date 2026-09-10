@@ -1,5 +1,270 @@
+// ═══════════════════════════════════════════════════════════════
+//  FOOTER
+//  Перенесено з вихідного style.css і переписано під BEM:
+//  анонімні div отримали класи, посилання — власний елемент
+//  .footer__link замість селектора за тегом.
+// ═══════════════════════════════════════════════════════════════
+
 .footer {
-	// .footer__container
-	&__container {
-	}
+  background-color: var(--sage);
+  color: rgba(255, 255, 255, 0.8);
+  @include adaptiveValue('padding-top', 72, 48);
+  padding-bottom: toRem(32);
+  font-size: toRem(14);
+
+  // Запас під .mobilebar, яка перекриває низ екрана.
+  // Змінну виставляє сам компонент панелі.
+
+  @media (max-width: toEm($mobile)) {
+    padding-bottom: calc(#{toRem(96)} + env(safe-area-inset-bottom, 0px));
+  }
+
+  // .footer__container
+
+  &__container {
+  }
+
+  // .footer__top
+
+  &__top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.1fr);
+    @include adaptiveValue('gap', 56, 32);
+    @include adaptiveValue('padding-bottom', 48, 36);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+      gap: toRem(36);
+    }
+  }
+
+  // ── Бренд ──────────────────────────────────────────────────
+
+  // .footer__brand
+
+  &__brand {
+    @media (max-width: toEm($tablet)) {
+      grid-column: span 2;
+    }
+
+    @media (max-width: toEm($mobile)) {
+      grid-column: auto;
+    }
+  }
+
+  // .footer__logo
+
+  &__logo {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 24, 21);
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: toRem(12);
+    transition: opacity 0.25s ease;
+
+    @media (any-hover: hover) {
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+
+  // .footer__tag
+
+  &__tag {
+    max-width: toRem(320);
+    line-height: 1.6;
+    margin-bottom: toRem(24);
+  }
+
+  // .footer__socials
+
+  &__socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(10);
+  }
+
+  // .footer__socials-item
+
+  &__socials-item {
+  }
+
+  // .footer__social
+
+  &__social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(42);
+    height: toRem(42);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.85);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      box-shadow 0.25s ease;
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: #fff;
+        color: var(--sage);
+        box-shadow: inset 0 0 0 1px #fff;
+      }
+    }
+
+    svg {
+      width: toRem(20);
+      height: toRem(20);
+    }
+  }
+
+  // ── Колонки ────────────────────────────────────────────────
+
+  // .footer__col
+
+  &__col {
+  }
+
+  // .footer__title
+
+  &__title {
+    font-family: var(--font-sans);
+    font-size: toRem(13);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #fff;
+    margin-bottom: toRem(18);
+  }
+
+  // .footer__nav
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+  }
+
+  // .footer__nav-item
+
+  &__nav-item {
+  }
+
+  // .footer__link
+
+  &__link {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+    transition: color 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  // ── Графік ─────────────────────────────────────────────────
+
+  // .footer__schedule
+
+  &__schedule {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(8);
+    margin-bottom: toRem(12);
+  }
+
+  // .footer__schedule-row
+
+  &__schedule-row {
+    display: flex;
+    align-items: baseline;
+    gap: toRem(12);
+  }
+
+  // .footer__schedule-key
+
+  &__schedule-key {
+    flex: 0 0 toRem(64);
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  // .footer__schedule-value
+
+  &__schedule-value {
+    color: #fff;
+  }
+
+  // .footer__schedule-note
+
+  &__schedule-note {
+    font-size: toRem(13);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.55);
+    padding-bottom: toRem(24);
+    margin-bottom: toRem(24);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  // .footer__legal
+
+  &__legal {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+  }
+
+  // .footer__legal-item
+
+  &__legal-item {
+  }
+
+  // ── Низ ────────────────────────────────────────────────────
+
+  // .footer__bottom
+
+  &__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(12);
+    @include adaptiveValue('padding-top', 32, 24);
+    font-size: toRem(13);
+    color: rgba(255, 255, 255, 0.55);
+
+    @media (max-width: toEm($mobileSmall)) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: toRem(8);
+    }
+  }
+
+  // .footer__copy
+
+  &__copy {
+  }
+
+  // .footer__made
+
+  &__made {
+  }
 }

@@ -1,0 +1,44 @@
+.blockhead {
+  // .blockhead__label
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(14);
+    margin-bottom: toRem(18);
+    font-size: toRem(12);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--sage);
+
+    &::before {
+      content: '';
+      flex: 0 0 toRem(32);
+      width: toRem(32);
+      height: 1px;
+      background-color: currentColor;
+    }
+  }
+
+  // .blockhead__title
+
+  &__title {
+    &:not(:last-child) {
+      margin-bottom: toRem(20);
+    }
+  }
+
+  // .blockhead__text
+
+  &__text {
+    max-width: toRem(560);
+    @include adaptiveValue('font-size', 20, 17);
+    line-height: 1.55;
+    color: var(--ink-soft);
+
+    p:not(:last-child) {
+      margin-bottom: toRem(12);
+    }
+  }
+}

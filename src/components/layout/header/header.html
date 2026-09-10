@@ -1,5 +1,18 @@
 <header data-fls-header class="header">
-	<div class="header__container">
-		<!-- <include src="@components/layout/menu/menu.html" locals='{"active":"[[active]]"}'></include> -->
-	</div>
+  <div class="header__container">
+    <div class="header__body">
+      <a href="index.html" class="header__link-logo">Альона Снігур</a>
+
+      <include
+        src="@components/layout/menu/menu.html"
+        locals='{"active":"[[active]]"}'
+      ></include>
+      <a
+        href="/contacts.html"
+        data-fls-button
+        class="header__btn btn btn--primary btn--sm nav__cta"
+        >Записатися</a
+      >
+    </div>
+  </div>
 </header>

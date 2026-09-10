@@ -1,0 +1,1073 @@
+// ═══════════════════════════════════════════════════════════════
+//  HOME — головна сторінка
+//  1. Спільні елементи (blockhead, ритм секцій)
+//  2. Hero
+//  3. About
+//  4. Services
+//  5. Issues
+//  6. Process
+//  7. Groups
+//  8. Club
+//  9. FAQ
+// 8. CTA
+// ═══════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────────────────────
+// Вертикальний ритм сторінки
+// ───────────────────────────────────────────────────────────────
+// Один регулятор на всю сторінку. Щоб зробити сторінку щільнішою
+// або просторішою — міняється тільки --section-space нижче.
+//
+//   --section-space   відступ згори і знизу кожної секції
+//   --head-space      від заголовка секції до її контенту
+//
+// 120px зверху + 120px знизу = 240px між сусідніми секціями
+// на десктопі, 128px на мобільному.
+
+.home {
+  @include adaptiveValue('--section-space', 120, 64);
+  @include adaptiveValue('--head-space', 64, 40);
+
+  > section {
+    padding-top: var(--section-space);
+    padding-bottom: var(--section-space);
+  }
+
+  // Hero: додає компенсацію фіксованого хедера.
+  // Селектор з двох класів, щоб перебити правило вище.
+
+  > .home__hero {
+    @include adaptiveValue('padding-top', 190, 130);
+  }
+
+  // Чергування фону, щоб сусідні секції не зливалися.
+  // Process лишається на --bg: маркери таймлайну перекривають
+  // лінію кольором var(--bg), інакше вони не «прорізали» б її.
+
+  &__about,
+  &__issues,
+  &__faq {
+    background-color: var(--surface-alt);
+  }
+}
+
+// Заголовок секції → відступ до контенту.
+// Перелічені явно, а не через :not(:last-child), щоб не
+// перебивати власний відступ .hero__blockhead.
+
+.about__blockhead,
+.services__blockhead,
+.issues__blockhead,
+.process__blockhead,
+.faq__blockhead {
+  margin-bottom: var(--head-space);
+}
+
+// ───────────────────────────────────────────────────────────────
+// 2. HERO
+// ───────────────────────────────────────────────────────────────
+
+.hero {
+  // .hero__content
+
+  &__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    @include adaptiveValue('gap', 80, 40);
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+      gap: toRem(40);
+    }
+  }
+
+  // .hero__text
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  // .hero__blockhead
+
+  &__blockhead {
+    @include adaptiveValue('margin-bottom', 40, 28);
+  }
+
+  // .hero__actions
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(14);
+    @include adaptiveValue('margin-bottom', 48, 32);
+
+    @media (max-width: toEm($mobileSmall)) {
+      width: 100%;
+
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+
+  // .hero__trust
+
+  &__trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: toRem(10) 0;
+    color: var(--ink-soft);
+    font-size: toRem(15);
+    line-height: 1.4;
+  }
+
+  // .hero__trust-item
+
+  &__trust-item {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child)::after {
+      content: '';
+      flex: 0 0 toRem(4);
+      width: toRem(4);
+      height: toRem(4);
+      margin: 0 toRem(14);
+      border-radius: 50%;
+      background-color: var(--border);
+    }
+  }
+
+  // .hero__img
+
+  &__img {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background-color: var(--surface-alt);
+
+    img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    @media (max-width: toEm($tablet)) {
+      max-width: toRem(460);
+      margin-inline: auto;
+
+      img {
+        aspect-ratio: 3 / 4;
+      }
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 3. ABOUT
+// ───────────────────────────────────────────────────────────────
+
+.about {
+  // .about__grid
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    @include adaptiveValue('gap', 80, 40);
+    align-items: start;
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+      gap: toRem(40);
+    }
+  }
+
+  // .about__media
+
+  &__media {
+    position: sticky;
+    top: toRem(110);
+
+    @media (max-width: toEm($tablet)) {
+      position: static;
+      max-width: toRem(420);
+      margin-inline: auto;
+    }
+  }
+
+  // .about__img
+
+  &__img {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background-color: var(--surface);
+
+    img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center top;
+    }
+  }
+
+  // .about__text
+
+  &__text {
+    max-width: toRem(620);
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.7;
+    color: var(--ink-soft);
+
+    p:not(:last-child) {
+      margin-bottom: toRem(16);
+    }
+  }
+
+  // .about__quals
+
+  &__quals {
+    @include adaptiveValue('margin-top', 48, 32);
+    @include adaptiveValue('margin-bottom', 40, 28);
+  }
+
+  // .about__link
+
+  &__link {
+  }
+}
+
+.quals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: toRem(24);
+  padding-top: toRem(28);
+  border-top: 1px solid var(--border);
+
+  @media (max-width: toEm($mobileSmall)) {
+    grid-template-columns: 1fr;
+    gap: toRem(20);
+  }
+
+  // .quals__item
+
+  &__item {
+  }
+
+  // .quals__value
+
+  &__value {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 40, 32);
+    line-height: 1;
+    color: var(--sage);
+    margin-bottom: toRem(8);
+  }
+
+  // .quals__label
+
+  &__label {
+    font-size: toRem(14);
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 4. SERVICES
+// ───────────────────────────────────────────────────────────────
+
+.services {
+  // .services__list
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include adaptiveValue('gap', 28, 20);
+    align-items: stretch;
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+      max-width: toRem(620);
+      margin-inline: auto;
+    }
+  }
+
+  // .services__note
+
+  &__note {
+    margin-top: toRem(32);
+    text-align: center;
+    font-size: toRem(15);
+    color: var(--ink-soft);
+  }
+}
+
+.card-service {
+  display: flex;
+  flex-direction: column;
+  @include adaptiveValue('padding', 36, 24);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+
+  // .card-service--featured
+
+  &--featured {
+    background-color: var(--sage);
+    box-shadow: var(--shadow-lg);
+    color: #fff;
+
+    .card-service__title,
+    .card-service__price {
+      color: #fff;
+    }
+
+    .card-service__note,
+    .card-service__text,
+    .card-service__spec {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .card-service__spec::before {
+      background-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .card-service__footer {
+      border-top-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn--primary {
+      background-color: #fff;
+      color: var(--sage);
+
+      @media (any-hover: hover) {
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.88);
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  // .card-service__head
+
+  &__head {
+    margin-bottom: toRem(16);
+  }
+
+  // .card-service__title
+
+  &__title {
+    @include adaptiveValue('font-size', 26, 22);
+    line-height: 1.2;
+    margin-bottom: toRem(6);
+  }
+
+  // .card-service__note
+
+  &__note {
+    font-size: toRem(14);
+    color: var(--ink-soft);
+  }
+
+  // .card-service__text
+
+  &__text {
+    font-size: toRem(16);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: toRem(24);
+  }
+
+  // .card-service__specs
+
+  &__specs {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+    margin-bottom: toRem(28);
+  }
+
+  // .card-service__spec
+
+  &__spec {
+    position: relative;
+    padding-left: toRem(18);
+    font-size: toRem(15);
+    line-height: 1.4;
+    color: var(--ink-soft);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(9);
+      width: toRem(6);
+      height: toRem(6);
+      border-radius: 50%;
+      background-color: var(--border);
+    }
+  }
+
+  // .card-service__footer
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(16);
+    margin-top: auto;
+    padding-top: toRem(24);
+    border-top: 1px solid var(--border);
+  }
+
+  // .card-service__price
+
+  &__price {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 26, 22);
+    line-height: 1;
+    color: var(--ink);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 5. ISSUES
+// ───────────────────────────────────────────────────────────────
+
+.issues {
+  // .issues__cta
+
+  &__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: toRem(20);
+    @include adaptiveValue('margin-top', 64, 44);
+    @include adaptiveValue('padding-top', 44, 32);
+    border-top: 1px solid var(--border);
+  }
+
+  // .issues__cta-text
+
+  &__cta-text {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 22, 18);
+    line-height: 1.3;
+  }
+}
+
+// ── Таби ─────────────────────────────────────────────────────
+// Без JS усі панелі видимі та йдуть одна за одною.
+// Скрипт ставить [data-fls-issues-ready] і вмикає режим табів.
+
+.tabs-issues {
+  // .tabs-issues__nav
+
+  &__nav {
+    display: flex;
+    gap: toRem(4);
+    @include adaptiveValue('margin-bottom', 56, 32);
+    border-bottom: 1px solid var(--border);
+
+    // ≤992 — вертикальний список замість ряду.
+    // Горизонтальна прокрутка тут була б гіршою:
+    // третя тема просто не потрапляла б в поле зору.
+
+    @media (max-width: toEm($tablet)) {
+      flex-direction: column;
+      gap: 0;
+      border-bottom: none;
+      border-left: 2px solid var(--border);
+    }
+  }
+
+  // .tabs-issues__tab
+
+  &__tab {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: toRem(16) toRem(18) toRem(18);
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 20, 17);
+    line-height: 1.25;
+    text-align: left;
+    color: var(--ink-soft);
+    transition: color 0.25s ease;
+
+    // Індикатор активного таба
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background-color: var(--sage);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: -4px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--ink);
+      }
+    }
+
+    &[aria-selected='true'] {
+      color: var(--ink);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    // ≤992 — індикатор стає вертикальною рискою ліворуч
+
+    @media (max-width: toEm($tablet)) {
+      flex: 0 0 auto;
+      width: 100%;
+      padding: toRem(14) toRem(20);
+
+      &::after {
+        top: 0;
+        right: auto;
+        bottom: 0;
+        left: -2px;
+        width: 2px;
+        height: auto;
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+
+      &[aria-selected='true'] {
+        background-color: var(--sage-soft);
+
+        &::after {
+          transform: scaleY(1);
+        }
+      }
+    }
+
+    @media (max-width: toEm($mobileSmall)) {
+      padding: toRem(12) toRem(16);
+    }
+  }
+
+  // .tabs-issues__panels
+
+  &__panels {
+  }
+
+  // .tabs-issues__panel
+
+  &__panel {
+    &:not(:last-child) {
+      @include adaptiveValue('margin-bottom', 72, 48);
+    }
+  }
+
+  // Режим табів — вмикається скриптом
+
+  &[data-fls-issues-ready] {
+    .tabs-issues__panel {
+      margin-bottom: 0;
+
+      &[hidden] {
+        display: none;
+      }
+    }
+
+    // Заголовок панелі дублює назву таба — ховаємо візуально,
+    // але лишаємо для скрінрідерів
+    .issue-panel__title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+}
+
+.issue-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  @include adaptiveValue('gap', 64, 36);
+  align-items: start;
+
+  @media (max-width: toEm($tablet)) {
+    grid-template-columns: 1fr;
+  }
+
+  // .issue-panel__intro
+
+  &__intro {
+    @media (min-width: toEm($tablet + 1)) {
+      position: sticky;
+      top: toRem(120);
+    }
+  }
+
+  // .issue-panel__title
+
+  &__title {
+    @include adaptiveValue('font-size', 30, 24);
+    line-height: 1.2;
+    margin-bottom: toRem(16);
+  }
+
+  // .issue-panel__lead
+
+  &__lead {
+    @include adaptiveValue('font-size', 20, 17);
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: toRem(20);
+  }
+
+  // .issue-panel__text
+
+  &__text {
+    font-size: toRem(16);
+    line-height: 1.7;
+    color: var(--ink-soft);
+
+    &:not(:last-child) {
+      margin-bottom: toRem(14);
+    }
+  }
+
+  // .issue-panel__list
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include adaptiveValue('gap', 16, 12);
+
+    // ≤768 — один стовпець: два по 150px нечитабельні
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.issue-item {
+  @include adaptiveValue('padding', 24, 20);
+  border-radius: var(--r-md);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border-soft);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+
+  @media (any-hover: hover) {
+    &:hover {
+      box-shadow: inset 0 0 0 1px var(--sage);
+      transform: translateY(#{toRem(-2)});
+    }
+  }
+
+  // .issue-item__title
+
+  &__title {
+    font-family: var(--font-sans);
+    font-size: toRem(17);
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: toRem(8);
+  }
+
+  // .issue-item__text
+
+  &__text {
+    font-size: toRem(15);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 6. PROCESS
+// ───────────────────────────────────────────────────────────────
+
+.process {
+  // .process__list
+
+  &__list {
+    position: relative;
+    max-width: toRem(820);
+    counter-reset: none;
+
+    // Лінія-хребет
+    &::before {
+      content: '';
+      position: absolute;
+      left: toRem(23);
+      top: toRem(24);
+      bottom: toRem(24);
+      width: 2px;
+      background-color: var(--border);
+
+      @media (max-width: toEm($mobile)) {
+        left: toRem(19);
+      }
+    }
+
+    // Прогрес, який промальовується при скролі
+    &::after {
+      content: '';
+      position: absolute;
+      left: toRem(23);
+      top: toRem(24);
+      width: 2px;
+      height: 0;
+      background-color: var(--sage);
+      transition: height 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+
+      @media (max-width: toEm($mobile)) {
+        left: toRem(19);
+      }
+    }
+
+    &[data-fls-process-active]::after {
+      height: calc(100% - #{toRem(48)});
+    }
+  }
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: toRem(48) minmax(0, 1fr);
+  @include adaptiveValue('gap', 28, 18);
+  align-items: start;
+
+  &:not(:last-child) {
+    @include adaptiveValue('padding-bottom', 48, 32);
+  }
+
+  @media (max-width: toEm($mobile)) {
+    grid-template-columns: toRem(40) minmax(0, 1fr);
+  }
+
+  // .step__marker
+
+  &__marker {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(48);
+    height: toRem(48);
+    border-radius: 50%;
+    background-color: var(--bg);
+    box-shadow: inset 0 0 0 2px var(--border);
+    transition:
+      background-color 0.5s ease,
+      box-shadow 0.5s ease,
+      color 0.5s ease;
+
+    @media (max-width: toEm($mobile)) {
+      width: toRem(40);
+      height: toRem(40);
+    }
+  }
+
+  // .step__num
+
+  &__num {
+    font-family: var(--font-serif);
+    font-size: toRem(15);
+    line-height: 1;
+    color: var(--ink-soft);
+    transition: color 0.5s ease;
+  }
+
+  // .step__body
+
+  &__body {
+    padding-top: toRem(10);
+
+    @media (max-width: toEm($mobile)) {
+      padding-top: toRem(6);
+    }
+  }
+
+  // .step__title
+
+  &__title {
+    @include adaptiveValue('font-size', 26, 21);
+    line-height: 1.25;
+    margin-bottom: toRem(10);
+  }
+
+  // .step__text
+
+  &__text {
+    max-width: toRem(560);
+    font-size: toRem(16);
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  // Активний стан — виставляє JS
+
+  &[data-fls-step-active] {
+    .step__marker {
+      background-color: var(--sage);
+      box-shadow: inset 0 0 0 2px var(--sage);
+    }
+
+    .step__num {
+      color: #fff;
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 7. FAQ
+// ───────────────────────────────────────────────────────────────
+
+.faq {
+  // Заголовок і список — одна центрована колонка.
+  // Текст усередині лишається вирівняним ліворуч, як і в решті секцій.
+
+  &__blockhead,
+  &__list {
+    max-width: toRem(880);
+    margin-inline: auto;
+  }
+
+  // .faq__list
+
+  &__list {
+    border-top: 1px solid var(--border);
+  }
+
+  // .faq__item
+
+  &__item {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+.faq-item {
+  // .faq-item__heading
+
+  &__heading {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  // .faq-item__q
+
+  &__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(24);
+    width: 100%;
+    @include adaptiveValue('padding-top', 26, 20);
+    @include adaptiveValue('padding-bottom', 26, 20);
+    text-align: left;
+    color: var(--ink);
+    transition: color 0.25s ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: -2px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--sage);
+      }
+    }
+  }
+
+  // .faq-item__q-text
+
+  &__q-text {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 22, 18);
+    line-height: 1.35;
+  }
+
+  // .faq-item__icon
+
+  &__icon {
+    position: relative;
+    flex: 0 0 toRem(20);
+    width: toRem(20);
+    height: toRem(20);
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      background-color: currentColor;
+      transform: translate(-50%, -50%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &::before {
+      width: toRem(16);
+      height: 2px;
+    }
+
+    &::after {
+      width: 2px;
+      height: toRem(16);
+    }
+  }
+
+  // .faq-item__a
+
+  &__a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // .faq-item__a-inner
+
+  &__a-inner {
+    overflow: hidden;
+
+    p {
+      max-width: toRem(700);
+      padding-bottom: toRem(28);
+      font-size: toRem(16);
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+  }
+
+  // Розгорнутий стан — виставляє JS
+
+  &--open {
+    .faq-item__a {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-item__icon::after {
+      transform: translate(-50%, -50%) scaleY(0);
+    }
+
+    .faq-item__q {
+      color: var(--sage);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 8. CTA
+// ───────────────────────────────────────────────────────────────
+
+.cta {
+  // .cta__inner
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    @include adaptiveValue('padding-top', 88, 48);
+    @include adaptiveValue('padding-bottom', 88, 48);
+    @include adaptiveValue('padding-left', 40, 24);
+    @include adaptiveValue('padding-right', 40, 24);
+    border-radius: var(--r-lg);
+    background-color: var(--sage);
+    color: #fff;
+  }
+
+  // .cta__title
+
+  &__title {
+    @include adaptiveValue('font-size', 48, 30);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: toRem(16);
+  }
+
+  // .cta__text
+
+  &__text {
+    max-width: toRem(460);
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: toRem(36);
+  }
+
+  .btn--primary {
+    background-color: #fff;
+    color: var(--sage);
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.88);
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// Поява секцій при скролі — один спільний механізм.
+// Стан за замовчуванням застосовується ТІЛЬКИ якщо JS увімкнув
+// його атрибутом на <html>, інакше без JS контент був би невидимий.
+// ───────────────────────────────────────────────────────────────
+
+html[data-fls-reveal] {
+  [data-fls-reveal-item] {
+    opacity: 0;
+    transform: translateY(#{toRem(16)});
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  [data-fls-reveal-item][data-fls-reveal-visible] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-fls-reveal] [data-fls-reveal-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .process__list::after,
+  .step__marker,
+  .step__num,
+  .faq-item__a,
+  .faq-item__icon::before,
+  .faq-item__icon::after {
+    transition: none;
+  }
+}

@@ -1,9 +1,10 @@
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Підключення загальних змінних
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-@use "variables";
+@use 'variables';
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Підключення загальних віддалених шрифтів (Google Fonts)
+@import url(https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap);
 // Використовуйте плагін для VS Code Better Google Fonts for VS Code (https://marketplace.visualstudio.com/items?itemName=Pavlo-K.better-google-fonts)
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -11,39 +12,40 @@
 // Стилі тега BODY
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 body {
-	color: var(--main-color);
-	font-family: var(--font-family);
-	font-size: var(--font-size);
+  color: var(--main-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  min-width: #{$minWidth}px;
+  line-height: 1.6;
+  background-color: var(--bg);
 
-	min-width: #{$minWidth}px;
-
-	// Скролл заблоковано
-	[data-fls-scrolllock] & {
-		overflow: hidden;
-		touch-action: none;
-		overscroll-behavior: none;
-	}
-	// Сайт завантажений
-	[data-fls-loaded] & {
-	}
+  // Скролл заблоковано
+  [data-fls-scrolllock] & {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+  // Сайт завантажений
+  [data-fls-loaded] & {
+  }
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Оболонка WRAPPER
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 .wrapper {
-	min-height: 100%;
-	display: flex;
-	flex-direction: column;
-	overflow: clip;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
 
-	// Притискаємо footer
-	> main {
-		flex: 1 1 auto;
-	}
-	// Фікс для слайдерів
-	> * {
-		min-width: 0;
-	}
+  // Притискаємо footer
+  > main {
+    flex: 1 1 auto;
+  }
+  // Фікс для слайдерів
+  > * {
+    min-width: 0;
+  }
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Обмежуючий контейнер
@@ -53,49 +55,127 @@ body {
 // Наприклад header__container, main__container і т.п.
 // Сніппет (HTML): cnt
 @if ($responsiveType==1) {
-	// Чуйна
-	[class*="__container"] {
-		@if ($maxWidthContainer>0) {
-			max-width: #{$containerWidth}px;
-			margin: 0 auto;
-		}
-		@if ($containerPadding>0) {
-			@if ($maxWidthContainer>0) {
-				padding-left: #{math.div($containerPadding, 2)}px;
-				padding-right: #{math.div($containerPadding, 2)}px;
-			} @else {
-				@include adaptiveValue("padding-left", math.div($containerPadding, 2), 15);
-				@include adaptiveValue("padding-right", math.div($containerPadding, 2), 15);
-			}
-		}
-	}
+  // Чуйна
+  [class*='__container'] {
+    @if ($maxWidthContainer>0) {
+      max-width: #{$containerWidth}px;
+      margin: 0 auto;
+    }
+    @if ($containerPadding>0) {
+      @if ($maxWidthContainer>0) {
+        padding-left: #{math.div($containerPadding, 2)}px;
+        padding-right: #{math.div($containerPadding, 2)}px;
+      } @else {
+        @include adaptiveValue(
+          'padding-left',
+          math.div($containerPadding, 2),
+          15
+        );
+        @include adaptiveValue(
+          'padding-right',
+          math.div($containerPadding, 2),
+          15
+        );
+      }
+    }
+  }
 } @else {
-	// Брейк-поїнтами
-	[class*="__container"] {
-		margin: 0 auto;
-		@if ($maxWidthContainer>0) {
-			max-width: #{$maxWidthContainer}px;
-		} @else {
-			@if ($containerPadding>0) {
-				padding-left: #{math.div($containerPadding, 2)}px;
-				padding-right: #{math.div($containerPadding, 2)}px;
-			}
-		}
-		@media (max-width: toEm($pc)) {
-			max-width: 970px;
-		}
-		@media (max-width: toEm($tablet)) {
-			max-width: 750px;
-		}
-		@media (max-width: toEm($mobile)) {
-			max-width: none;
-			@if ($containerPadding>0 and $maxWidthContainer>0) {
-				padding-left: #{math.div($containerPadding, 2)}px;
-				padding-right: #{math.div($containerPadding, 2)}px;
-			}
-		}
-	}
+  // Брейк-поїнтами
+  [class*='__container'] {
+    margin: 0 auto;
+    @if ($maxWidthContainer>0) {
+      max-width: #{$maxWidthContainer}px;
+    } @else {
+      @if ($containerPadding>0) {
+        padding-left: #{math.div($containerPadding, 2)}px;
+        padding-right: #{math.div($containerPadding, 2)}px;
+      }
+    }
+    @media (max-width: toEm($pc)) {
+      max-width: 970px;
+    }
+    @media (max-width: toEm($tablet)) {
+      max-width: 750px;
+    }
+    @media (max-width: toEm($mobile)) {
+      max-width: none;
+      @if ($containerPadding>0 and $maxWidthContainer>0) {
+        padding-left: #{math.div($containerPadding, 2)}px;
+        padding-right: #{math.div($containerPadding, 2)}px;
+      }
+    }
+  }
 }
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Загальні стилі для усього сайту
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+body {
+  line-height: 1.6;
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ─── Заголовки ───
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+h1 {
+  @include adaptiveValue('font-size', 76, 40);
+  line-height: 1.05;
+}
+h2 {
+  @include adaptiveValue('font-size', 58, 32);
+}
+h3 {
+  @include adaptiveValue('font-size', 26, 22);
+  line-height: 1.25;
+}
+
+// ─── Посилання та медіа ───
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+img,
+picture,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background-color: var(--sage);
+  color: #fff;
+}
+
+// ─── Плавний скрол з поправкою на фіксований хедер ───
+
+html {
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 100px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
