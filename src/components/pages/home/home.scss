@@ -189,15 +189,27 @@
   }
 
   // .about__media
+  //
+  // На планшеті/мобільному фото має стояти між заголовком і текстом,
+  // а не перед усім блоком. Замість фізичного перенесення розмітки —
+  // "розчиняємо" обгортки (display: contents), і .about__blockhead,
+  // .about__img, .about__text та інші стають рівноправними елементами
+  // .about__grid, чий порядок керується через order.
 
   &__media {
     position: sticky;
     top: toRem(110);
 
     @media (max-width: toEm($tablet)) {
-      position: static;
-      max-width: toRem(420);
-      margin-inline: auto;
+      display: contents;
+    }
+  }
+
+  // .about__body
+
+  &__body {
+    @media (max-width: toEm($tablet)) {
+      display: contents;
     }
   }
 
@@ -215,6 +227,12 @@
       object-fit: cover;
       object-position: center top;
     }
+
+    @media (max-width: toEm($tablet)) {
+      order: 2;
+      max-width: toRem(420);
+      margin-inline: auto;
+    }
   }
 
   // .about__text
@@ -228,6 +246,10 @@
     p:not(:last-child) {
       margin-bottom: toRem(16);
     }
+
+    @media (max-width: toEm($tablet)) {
+      order: 3;
+    }
   }
 
   // .about__quals
@@ -235,11 +257,29 @@
   &__quals {
     @include adaptiveValue('margin-top', 48, 32);
     @include adaptiveValue('margin-bottom', 40, 28);
+
+    @media (max-width: toEm($tablet)) {
+      order: 4;
+    }
   }
 
   // .about__link
 
   &__link {
+    @media (max-width: toEm($tablet)) {
+      order: 5;
+    }
+  }
+}
+
+// Заголовок стає першим елементом (order: 1) у сплющеному
+// на планшеті .about__grid — інтервал перед фото задає grid-gap,
+// тож власний відступ заголовка тут зайвий.
+
+.about__blockhead {
+  @media (max-width: toEm($tablet)) {
+    order: 1;
+    margin-bottom: 0;
   }
 }
 
