@@ -6,14 +6,14 @@
     <ul class="menu__list">
       <each
         loop='item in [
-					{"href": "#","ancor": "Про мене"},
-					{"href": "#","ancor": "Послуги"},
-					{"href": "#","ancor": "Партнерство"},
-					{"href": "#","ancor": "Вебінари"},
-					{"href": "#","ancor": "Блог"}
+					{"href": "/about.html","ancor": "Про мене","slug":"about"},
+					{"href": "#","ancor": "Послуги","slug":"services"},
+					{"href": "#","ancor": "Партнерство","slug":"partnership"},
+					{"href": "#","ancor": "Вебінари","slug":"webinars"},
+					{"href": "#","ancor": "Блог","slug":"blog"}
 				]'
       >
-        <if condition="'[[active]]' === '[[item.ancor]]'">
+        <if condition="'[[active]]' === '[[item.slug]]'">
           <li class="menu__item">
             <a href="[[item.href]]" class="menu__link menu__link--active"
               >[[item.ancor]]</a
