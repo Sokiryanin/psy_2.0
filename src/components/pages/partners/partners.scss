@@ -1,0 +1,577 @@
+// ═══════════════════════════════════════════════════════════════
+//  PARTNERS — сторінка «Партнерство та співпраця»
+//  1. Ритм секцій
+//  2. Intro
+//  3. Matcher — хто ви → що робимо
+//  4. Formats
+//  5. Experience
+//  6. CTA
+// ═══════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────────────────────
+// 1. Ритм
+// ───────────────────────────────────────────────────────────────
+
+.partners-page {
+  @include adaptiveValue('--section-space', 120, 64);
+  @include adaptiveValue('--head-space', 56, 36);
+
+  > section {
+    padding-top: var(--section-space);
+    padding-bottom: var(--section-space);
+  }
+
+  > .partners-page__intro {
+    @include adaptiveValue('padding-top', 180, 120);
+  }
+
+  &__match,
+  &__exp {
+    background-color: var(--surface-alt);
+  }
+}
+
+.partners-page [data-fls-blockhead] {
+  margin-bottom: var(--head-space);
+}
+
+// ───────────────────────────────────────────────────────────────
+// 2. INTRO
+// ───────────────────────────────────────────────────────────────
+
+.pt-intro {
+  // .pt-intro__blockhead
+
+  &__blockhead {
+    max-width: toRem(860);
+
+    .blockhead__text {
+      max-width: toRem(760);
+    }
+  }
+
+  // .pt-intro__grid
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    @include adaptiveValue('gap', 56, 28);
+    align-items: start;
+    @include adaptiveValue('padding-top', 40, 28);
+    border-top: 1px solid var(--border);
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .pt-intro__text
+
+  &__text {
+    max-width: toRem(680);
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+
+  // .pt-intro__facts
+
+  &__facts {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+  }
+
+  // .pt-intro__fact
+
+  &__fact {
+    position: relative;
+    padding-left: toRem(24);
+    @include adaptiveValue('font-size', 17, 15);
+    line-height: 1.45;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(9);
+      width: toRem(8);
+      height: toRem(8);
+      border-radius: 50%;
+      background-color: var(--sage);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 3. MATCHER
+// ───────────────────────────────────────────────────────────────
+// Шість типів партнерів × чотири формати. Замість того, щоб лишати
+// читача самого зіставляти матрицю, вибір зліва одразу показує,
+// що зазвичай робимо саме з такими партнерами.
+//
+// Без JS усі шість панелей видимі та йдуть одна за одною.
+
+.match {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  @include adaptiveValue('gap', 40, 24);
+  align-items: start;
+
+  @media (max-width: toEm($tablet)) {
+    grid-template-columns: 1fr;
+  }
+
+  // .match__nav
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(4);
+    border-left: 2px solid var(--border);
+  }
+
+  // .match__tab
+
+  &__tab {
+    position: relative;
+    width: 100%;
+    padding: toRem(16) toRem(22);
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 20, 17);
+    line-height: 1.3;
+    text-align: left;
+    color: var(--ink-soft);
+    transition:
+      color 0.25s ease,
+      background-color 0.25s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--sage);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: -4px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--ink);
+      }
+    }
+
+    &[aria-selected='true'] {
+      color: var(--ink);
+      background-color: var(--surface);
+
+      &::after {
+        transform: scaleY(1);
+      }
+    }
+  }
+
+  // .match__panels
+
+  &__panels {
+    @media (min-width: toEm($tablet + 1)) {
+      position: sticky;
+      top: toRem(110);
+    }
+  }
+
+  // .match__panel
+
+  &__panel {
+    &:not(:last-child) {
+      @include adaptiveValue('margin-bottom', 24, 16);
+    }
+  }
+
+  // Режим табів — вмикає скрипт
+
+  &[data-fls-matcher-ready] {
+    .match__panel {
+      margin-bottom: 0;
+
+      &[hidden] {
+        display: none;
+      }
+    }
+  }
+}
+
+.m-panel {
+  @include adaptiveValue('padding', 40, 24);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  animation: m-panel-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  // .m-panel__title
+
+  &__title {
+    @include adaptiveValue('font-size', 28, 22);
+    line-height: 1.25;
+    margin-bottom: toRem(14);
+  }
+
+  // .m-panel__text
+
+  &__text {
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.7;
+    color: var(--ink-soft);
+    @include adaptiveValue('padding-bottom', 28, 20);
+    @include adaptiveValue('margin-bottom', 28, 20);
+    border-bottom: 1px solid var(--border);
+  }
+
+  // .m-panel__key
+
+  &__key {
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sage);
+    margin-bottom: toRem(14);
+  }
+
+  // .m-panel__formats
+
+  &__formats {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+  }
+
+  // .m-panel__format
+
+  &__format {
+  }
+
+  // .m-panel__link
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(16);
+    width: 100%;
+    padding: toRem(16) toRem(20);
+    border-radius: var(--r-md);
+    background-color: var(--surface-alt);
+    @include adaptiveValue('font-size', 17, 16);
+    line-height: 1.4;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+
+    // Стрілка-вказівник
+    &::after {
+      content: '';
+      flex: 0 0 toRem(10);
+      width: toRem(10);
+      height: toRem(10);
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(-45deg);
+      transition: transform 0.25s ease;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: 2px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: var(--sage-soft);
+        color: var(--sage);
+
+        &::after {
+          transform: rotate(-45deg) translate(#{toRem(3)}, #{toRem(3)});
+        }
+      }
+    }
+  }
+}
+
+@keyframes m-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(#{toRem(10)});
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 4. FORMATS
+// ───────────────────────────────────────────────────────────────
+
+.pt-formats {
+  // .pt-formats__list
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include adaptiveValue('gap', 24, 16);
+
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .pt-formats__mode
+
+  &__mode {
+    @include adaptiveValue('margin-top', 24, 16);
+  }
+}
+
+.fmt {
+  @include adaptiveValue('padding', 40, 24);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  scroll-margin-top: toRem(110);
+  transition: box-shadow 0.3s ease;
+
+  // Підсвічування після переходу з панелі партнера
+  &:target {
+    box-shadow:
+      inset 0 0 0 2px var(--sage),
+      var(--shadow-lg);
+  }
+
+  // .fmt__icon
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: toRem(48);
+    height: toRem(48);
+    margin-bottom: toRem(20);
+    border-radius: var(--r-md);
+    background-color: var(--sage-soft);
+    color: var(--sage);
+
+    svg {
+      width: toRem(24);
+      height: toRem(24);
+    }
+  }
+
+  // .fmt__title
+
+  &__title {
+    @include adaptiveValue('font-size', 26, 21);
+    line-height: 1.25;
+    margin-bottom: toRem(20);
+  }
+
+  // .fmt__list
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+  }
+
+  // .fmt__item
+
+  &__item {
+    position: relative;
+    padding-left: toRem(20);
+    font-size: toRem(16);
+    line-height: 1.5;
+    color: var(--ink-soft);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(10);
+      width: toRem(6);
+      height: toRem(6);
+      border-radius: 50%;
+      background-color: var(--border);
+    }
+  }
+
+  // .fmt__text
+
+  &__text {
+    @include adaptiveValue('font-size', 17, 16);
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+}
+
+.mode {
+  @include adaptiveValue('padding', 40, 24);
+  border-radius: var(--r-lg);
+  background-color: var(--sage);
+  color: rgba(255, 255, 255, 0.82);
+
+  // .mode__body
+
+  &__body {
+    max-width: toRem(680);
+  }
+
+  // .mode__title
+
+  &__title {
+    @include adaptiveValue('font-size', 26, 21);
+    line-height: 1.25;
+    color: #fff;
+    margin-bottom: toRem(12);
+  }
+
+  // .mode__text
+
+  &__text {
+    @include adaptiveValue('font-size', 17, 16);
+    line-height: 1.7;
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 5. EXPERIENCE
+// ───────────────────────────────────────────────────────────────
+
+.exp {
+  // .exp__grid
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    @include adaptiveValue('gap', 48, 28);
+    align-items: start;
+
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .exp__orgs
+
+  &__orgs {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(14);
+  }
+
+  // .exp__org
+
+  &__org {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(6);
+    @include adaptiveValue('padding', 28, 20);
+    border-radius: var(--r-md);
+    background-color: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--border);
+  }
+
+  // .exp__org-name
+
+  &__org-name {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 24, 20);
+    line-height: 1.25;
+  }
+
+  // .exp__org-type
+
+  &__org-type {
+    font-size: toRem(13);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+  }
+
+  // .exp__text
+
+  &__text {
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 6. CTA
+// ───────────────────────────────────────────────────────────────
+
+.cta {
+  // .cta__inner
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    @include adaptiveValue('padding-top', 88, 48);
+    @include adaptiveValue('padding-bottom', 88, 48);
+    @include adaptiveValue('padding-left', 40, 24);
+    @include adaptiveValue('padding-right', 40, 24);
+    border-radius: var(--r-lg);
+    background-color: var(--sage);
+    color: #fff;
+  }
+
+  // .cta__title
+
+  &__title {
+    @include adaptiveValue('font-size', 48, 30);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: toRem(16);
+  }
+
+  // .cta__text
+
+  &__text {
+    max-width: toRem(520);
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: toRem(36);
+  }
+
+  .btn--primary {
+    background-color: #fff;
+    color: var(--sage);
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.88);
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m-panel {
+    animation: none;
+  }
+
+  .match__tab,
+  .m-panel__link,
+  .fmt {
+    transition: none;
+  }
+}
