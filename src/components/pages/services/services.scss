@@ -1,0 +1,917 @@
+// ═══════════════════════════════════════════════════════════════
+//  SERVICES — сторінка «Послуги»
+//  1. Ритм секцій
+//  2. Intro
+//  3. Formats — шлях: вхідна точка → розгалуження
+//  4. Groups — спільні умови + три групи
+//  5. Schedule — найближчі набори
+//  6. Club
+//  7. CTA
+//  8. Поява при скролі
+// ═══════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────────────────────
+// 1. Ритм
+// ───────────────────────────────────────────────────────────────
+
+.services-page {
+  @include adaptiveValue('--section-space', 120, 64);
+  @include adaptiveValue('--head-space', 56, 36);
+
+  > section {
+    padding-top: var(--section-space);
+    padding-bottom: var(--section-space);
+  }
+
+  // Intro: компенсація фіксованого хедера + менший відступ знизу,
+  // бо далі одразу йде заголовок наступної секції
+
+  > .services-page__intro {
+    @include adaptiveValue('padding-top', 180, 120);
+    padding-bottom: 0;
+  }
+
+  &__groups,
+  &__club {
+    background-color: var(--surface-alt);
+  }
+}
+
+.services-page [data-fls-blockhead] {
+  margin-bottom: var(--head-space);
+}
+
+.services-page .club [data-fls-blockhead] {
+  margin-bottom: toRem(24);
+}
+
+// ───────────────────────────────────────────────────────────────
+// 2. INTRO
+// ───────────────────────────────────────────────────────────────
+
+.sv-intro {
+  // .sv-intro__blockhead
+
+  &__blockhead {
+    max-width: toRem(820);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 3. FORMATS
+// ───────────────────────────────────────────────────────────────
+// Три послуги не рівнозначні: первинна консультація обов'язкова
+// перед групами. Тому не ряд із трьох карток, а маршрут —
+// вхідна точка на всю ширину, далі розгалуження на два.
+
+.path {
+  // .path__step
+
+  &__step {
+  }
+
+  // .path__marker
+
+  &__marker {
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(12);
+    margin-bottom: toRem(16);
+    font-size: toRem(12);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sage);
+
+    &::before {
+      content: '';
+      flex: 0 0 toRem(8);
+      width: toRem(8);
+      height: toRem(8);
+      border-radius: 50%;
+      background-color: var(--sage);
+    }
+  }
+
+  // .path__card
+
+  &__card {
+    border-radius: var(--r-lg);
+  }
+
+  // .path__fork
+
+  &__fork {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include adaptiveValue('padding-top', 40, 28);
+    @include adaptiveValue('padding-bottom', 40, 28);
+  }
+
+  // .path__fork-line
+
+  &__fork-line {
+    width: 2px;
+    height: toRem(48);
+    margin-bottom: toRem(16);
+    background-color: var(--border);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // .path__fork-label
+
+  &__fork-label {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 20, 17);
+    line-height: 1.3;
+    color: var(--ink-soft);
+  }
+
+  // Лінія промальовується, коли розгалуження потрапляє в кадр
+
+  &[data-fls-path-active] .path__fork-line {
+    transform: scaleY(1);
+    background-color: var(--sage);
+  }
+
+  // .path__branches
+
+  &__branches {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include adaptiveValue('gap', 24, 16);
+
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// ── Вхідна точка ─────────────────────────────────────────────
+
+.entry {
+  @include adaptiveValue('padding', 48, 26);
+  background-color: var(--sage);
+  color: rgba(255, 255, 255, 0.82);
+
+  // .entry__head
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: toRem(16);
+    @include adaptiveValue('padding-bottom', 28, 20);
+    @include adaptiveValue('margin-bottom', 28, 20);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  // .entry__title
+
+  &__title {
+    @include adaptiveValue('font-size', 40, 26);
+    line-height: 1.15;
+    color: #fff;
+  }
+
+  // .entry__price
+
+  &__price {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 32, 24);
+    line-height: 1;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  // .entry__body
+
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    @include adaptiveValue('gap', 56, 28);
+    align-items: start;
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .entry__text
+
+  &__text {
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.7;
+
+    p:not(:last-child) {
+      margin-bottom: toRem(14);
+    }
+  }
+
+  // .entry__side
+
+  &__side {
+    @include adaptiveValue('padding', 24, 20);
+    border-radius: var(--r-md);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  // .entry__specs
+
+  &__specs {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+    margin-bottom: toRem(24);
+  }
+
+  // .entry__spec
+
+  &__spec {
+    position: relative;
+    padding-left: toRem(20);
+    font-size: toRem(16);
+    line-height: 1.4;
+    color: #fff;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(9);
+      width: toRem(6);
+      height: toRem(6);
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  // .entry__note
+
+  &__note {
+    @include adaptiveValue('margin-top', 32, 24);
+    @include adaptiveValue('padding-top', 24, 18);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: toRem(15);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .btn--primary {
+    background-color: #fff;
+    color: var(--sage);
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.88);
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// ── Розгалуження ─────────────────────────────────────────────
+
+.branch {
+  display: flex;
+  flex-direction: column;
+  @include adaptiveValue('padding', 36, 24);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+
+  // .branch__title
+
+  &__title {
+    @include adaptiveValue('font-size', 28, 22);
+    line-height: 1.2;
+    margin-bottom: toRem(14);
+  }
+
+  // .branch__lead
+
+  &__lead {
+    font-size: toRem(16);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: toRem(24);
+  }
+
+  // .branch__specs
+
+  &__specs {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+    margin-bottom: toRem(28);
+  }
+
+  // .branch__spec
+
+  &__spec {
+    position: relative;
+    padding-left: toRem(20);
+    font-size: toRem(15);
+    line-height: 1.45;
+    color: var(--ink-soft);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(9);
+      width: toRem(6);
+      height: toRem(6);
+      border-radius: 50%;
+      background-color: var(--border);
+    }
+  }
+
+  // .branch__footer
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(16);
+    margin-top: auto;
+    @include adaptiveValue('padding-top', 24, 20);
+    border-top: 1px solid var(--border);
+  }
+
+  // .branch__price
+
+  &__price {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 28, 23);
+    line-height: 1;
+  }
+
+  // .branch__price-unit
+
+  &__price-unit {
+    font-family: var(--font-sans);
+    font-size: toRem(15);
+    color: var(--ink-soft);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 4. GROUPS
+// ───────────────────────────────────────────────────────────────
+// Умови трьох груп майже ідентичні. Замість того, щоб повторювати
+// шість однакових рядків у кожній картці, спільне винесено вгору,
+// а в картках лишається тільки те, чим групи різняться.
+
+.shared {
+  @include adaptiveValue('padding', 32, 22);
+  @include adaptiveValue('margin-bottom', 32, 22);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+
+  // .shared__title
+
+  &__title {
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sage);
+    margin-bottom: toRem(18);
+  }
+
+  // .shared__list
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(10) 0;
+    @include adaptiveValue('padding-bottom', 20, 16);
+    @include adaptiveValue('margin-bottom', 20, 16);
+    border-bottom: 1px solid var(--border);
+  }
+
+  // .shared__item
+
+  &__item {
+    display: flex;
+    align-items: center;
+    @include adaptiveValue('font-size', 17, 15);
+    line-height: 1.4;
+
+    &:not(:last-child)::after {
+      content: '';
+      flex: 0 0 toRem(4);
+      width: toRem(4);
+      height: toRem(4);
+      margin: 0 toRem(16);
+      border-radius: 50%;
+      background-color: var(--border);
+    }
+  }
+
+  // .shared__price
+
+  &__price {
+    font-size: toRem(16);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  // .shared__price-value
+
+  &__price-value {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 24, 20);
+    color: var(--ink);
+  }
+}
+
+.groups {
+  // .groups__list
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include adaptiveValue('gap', 24, 16);
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .groups__requirement
+
+  &__requirement {
+    @include adaptiveValue('margin-top', 32, 24);
+    @include adaptiveValue('padding', 20, 16);
+    border-radius: var(--r-md);
+    background-color: var(--sage-soft);
+    font-size: toRem(16);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  // .groups__requirement-link
+
+  &__requirement-link {
+    color: var(--sage);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--sage-hover);
+      }
+    }
+  }
+}
+
+.group-card {
+  display: flex;
+  flex-direction: column;
+  @include adaptiveValue('padding', 32, 24);
+  border-radius: var(--r-lg);
+  background-color: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition: box-shadow 0.3s ease;
+
+  @media (any-hover: hover) {
+    &:hover {
+      box-shadow:
+        inset 0 0 0 1px var(--sage),
+        var(--shadow-lg);
+    }
+  }
+
+  // .group-card__head
+
+  &__head {
+    margin-bottom: toRem(18);
+  }
+
+  // .group-card__type
+
+  &__type {
+    display: inline-block;
+    padding: toRem(5) toRem(12);
+    margin-bottom: toRem(14);
+    border-radius: 100px;
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    // .group-card__type--closed
+
+    &--closed {
+      background-color: var(--sage-soft);
+      color: var(--sage);
+    }
+
+    // .group-card__type--open
+
+    &--open {
+      background-color: var(--surface-alt);
+      color: var(--ink-soft);
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+  }
+
+  // .group-card__title
+
+  &__title {
+    @include adaptiveValue('font-size', 24, 20);
+    line-height: 1.25;
+  }
+
+  // .group-card__for
+
+  &__for {
+    font-size: toRem(16);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: toRem(24);
+  }
+
+  // .group-card__for-key
+
+  &__for-key {
+    display: block;
+    margin-bottom: toRem(6);
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+  }
+
+  // .group-card__specs
+
+  &__specs {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+    @include adaptiveValue('padding-bottom', 24, 20);
+    @include adaptiveValue('margin-bottom', 24, 20);
+    border-bottom: 1px solid var(--border);
+  }
+
+  // .group-card__spec
+
+  &__spec {
+    display: flex;
+    align-items: baseline;
+    gap: toRem(12);
+  }
+
+  // .group-card__spec-key
+
+  &__spec-key {
+    flex: 0 0 toRem(86);
+    font-size: toRem(13);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+  }
+
+  // .group-card__spec-value
+
+  &__spec-value {
+    font-size: toRem(15);
+    line-height: 1.4;
+  }
+
+  // .group-card__footer
+
+  &__footer {
+    margin-top: auto;
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 5. SCHEDULE
+// ───────────────────────────────────────────────────────────────
+
+.schedule {
+  // .schedule__list
+
+  &__list {
+    border-top: 1px solid var(--border);
+  }
+
+  // .schedule__row
+
+  &__row {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+.sc-row {
+  display: grid;
+  grid-template-columns: toRem(88) minmax(0, 1fr) toRem(170) auto;
+  @include adaptiveValue('gap', 32, 20);
+  align-items: center;
+  @include adaptiveValue('padding-top', 26, 20);
+  @include adaptiveValue('padding-bottom', 26, 20);
+  transition: background-color 0.3s ease;
+
+  @media (any-hover: hover) {
+    &:hover {
+      background-color: var(--surface-alt);
+    }
+  }
+
+  @media (max-width: toEm($tablet)) {
+    grid-template-columns: toRem(72) minmax(0, 1fr);
+    row-gap: toRem(16);
+  }
+
+  // .sc-row__date
+
+  &__date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: toRem(12) toRem(8);
+    border-radius: var(--r-md);
+    background-color: var(--sage-soft);
+  }
+
+  // .sc-row__day
+
+  &__day {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 32, 26);
+    line-height: 1;
+    color: var(--sage);
+  }
+
+  // .sc-row__month
+
+  &__month {
+    font-size: toRem(13);
+    line-height: 1.2;
+    color: var(--sage);
+  }
+
+  // .sc-row__title
+
+  &__title {
+    @include adaptiveValue('font-size', 21, 18);
+    line-height: 1.3;
+    margin-bottom: toRem(6);
+  }
+
+  // .sc-row__meta
+
+  &__meta {
+    font-size: toRem(15);
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+
+  // .sc-row__seats
+
+  &__seats {
+    @media (max-width: toEm($tablet)) {
+      grid-column: 2;
+    }
+  }
+
+  // .sc-row__seats-text
+
+  &__seats-text {
+    font-size: toRem(14);
+    line-height: 1.4;
+    color: var(--ink-soft);
+    margin-bottom: toRem(8);
+  }
+
+  // .sc-row__seats-left
+
+  &__seats-left {
+    font-weight: 600;
+    color: var(--ink);
+
+    // .sc-row__seats-left--low
+
+    &--low {
+      color: var(--sage);
+    }
+  }
+
+  // .sc-row__seats-bar
+
+  &__seats-bar {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: toRem(140);
+    height: toRem(4);
+    border-radius: 2px;
+    background-color: var(--border);
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: var(--seats-taken, 0%);
+      background-color: var(--sage);
+    }
+  }
+
+  // .sc-row__action
+
+  &__action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: toRem(10);
+
+    @media (max-width: toEm($tablet)) {
+      grid-column: 2;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    @media (max-width: toEm($mobileSmall)) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  // .sc-row__price
+
+  &__price {
+    font-family: var(--font-serif);
+    @include adaptiveValue('font-size', 21, 18);
+    line-height: 1;
+    white-space: nowrap;
+
+    span {
+      font-family: var(--font-sans);
+      font-size: toRem(14);
+      color: var(--ink-soft);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 6. CLUB
+// ───────────────────────────────────────────────────────────────
+
+.club {
+  // .club__inner
+
+  &__inner {
+    @include adaptiveValue('padding-top', 72, 40);
+    @include adaptiveValue('padding-bottom', 72, 40);
+    @include adaptiveValue('padding-left', 72, 24);
+    @include adaptiveValue('padding-right', 72, 24);
+    border-radius: var(--r-lg);
+    background-color: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--border);
+  }
+
+  // .club__body
+
+  &__body {
+    max-width: toRem(640);
+  }
+
+  // .club__text
+
+  &__text {
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: toRem(28);
+  }
+
+  // .club__features
+
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(12);
+    margin-bottom: toRem(36);
+  }
+
+  // .club__feature
+
+  &__feature {
+    position: relative;
+    padding-left: toRem(26);
+    font-size: toRem(16);
+    line-height: 1.5;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(9);
+      width: toRem(8);
+      height: toRem(8);
+      border-radius: 50%;
+      background-color: var(--sage);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 7. CTA
+// ───────────────────────────────────────────────────────────────
+
+.cta {
+  // .cta__inner
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    @include adaptiveValue('padding-top', 88, 48);
+    @include adaptiveValue('padding-bottom', 88, 48);
+    @include adaptiveValue('padding-left', 40, 24);
+    @include adaptiveValue('padding-right', 40, 24);
+    border-radius: var(--r-lg);
+    background-color: var(--sage);
+    color: #fff;
+  }
+
+  // .cta__title
+
+  &__title {
+    @include adaptiveValue('font-size', 48, 30);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: toRem(16);
+  }
+
+  // .cta__text
+
+  &__text {
+    max-width: toRem(520);
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: toRem(36);
+  }
+
+  .btn--primary {
+    background-color: #fff;
+    color: var(--sage);
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.88);
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 8. Поява при скролі
+// ───────────────────────────────────────────────────────────────
+
+html[data-fls-reveal] {
+  [data-fls-reveal-item] {
+    opacity: 0;
+    transform: translateY(#{toRem(16)});
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  [data-fls-reveal-item][data-fls-reveal-visible] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-fls-reveal] [data-fls-reveal-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .path__fork-line,
+  .group-card,
+  .sc-row {
+    transition: none;
+  }
+}

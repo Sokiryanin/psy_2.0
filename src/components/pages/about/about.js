@@ -2,7 +2,7 @@ import './about.scss';
 
 import './about.scss';
 
-import { bodyLockStatus, bodyLockToggle } from '@js/common/functions.js';
+import { bodyLockToggle } from '@js/common/functions.js';
 
 // ═══════════════════════════════════════════════════════════════
 //  ABOUT — інтерактив сторінки «Про мене»
@@ -91,7 +91,10 @@ function certsInit(list) {
     // Наступний кадр, щоб спрацював перехід прозорості
     requestAnimationFrame(() => viewer.setAttribute('data-fls-certs-open', ''));
 
-    if (bodyLockStatus) bodyLockToggle();
+    // delay: 0 — bodyLockToggle без нього на 500мс тримає внутрішній
+    // bodyLockStatus у false; якщо закрити лайтбокс швидше, виклик
+    // у close() мовчки проігнорується і скролл лишиться заблокованим
+    bodyLockToggle(0);
     closeBtn?.focus();
   };
 
@@ -108,7 +111,7 @@ function certsInit(list) {
     // Страховка, якщо переходи вимкнені
     window.setTimeout(finish, 400);
 
-    if (bodyLockStatus) bodyLockToggle();
+    bodyLockToggle(0);
     lastTrigger?.focus();
   };
 
