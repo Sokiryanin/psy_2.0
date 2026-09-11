@@ -1,23 +1,31 @@
-
-<template src="@components/templates/main/main.html" locals='{
-		"title":"webinars", 
-		"lang":"en",
-		"preloader": {
-			"enable":"false",
-			"once":"false"
-		},
-		"keywords":"", 
-		"description":""
-	}'>
-	<block name="header">
-		<include src="@components/layout/header/header.html" locals='{"active":"webinars"}'></include>
-	</block>
-	<block name="main">
-		<include src="@components/pages/webinars/webinars.html" locals='{}'></include>
-	</block>
-	<block name="footer">
-		<include src="@components/layout/footer/footer.html" locals='{}'></include>
-	</block>
-	<block name="popup"></block>
+<template
+  src="@components/templates/main/main.html"
+  locals='{
+    "title":"Вебінари про РХП та образ тіла | Альона Снігур",
+    "lang":"uk",
+    "preloader": {
+      "enable":"false",
+      "once":"false"
+    },
+    "keywords":"вебінар РХП, розлад харчової поведінки вебінар, образ тіла вебінар, безкоштовний вебінар психолог",
+    "description":"Безкоштовні вебінари про розлади харчової поведінки, образ тіла та підтримку підлітків із РХП. Для дорослих, підлітків і батьків.",
+    "active":"Вебінари"
+  }'
+>
+  <block name="header">
+    <include
+      src="@components/layout/header/header.html"
+      locals='{"active":"webinars"}'
+    ></include>
+  </block>
+  <block name="main">
+    <include
+      src="@components/pages/webinars/webinars.html"
+      locals="{}"
+    ></include>
+  </block>
+  <block name="footer">
+    <include src="@components/layout/footer/footer.html" locals="{}"></include>
+  </block>
+  <block name="popup"></block>
 </template>
-			

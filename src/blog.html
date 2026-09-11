@@ -1,0 +1,25 @@
+<template
+  src="@components/templates/main/main.html"
+  locals='{
+    "title":"Блог про РХП, образ тіла та стосунки з їжею | Альона Снігур",
+    "lang":"uk",
+    "preloader": { "enable":"false", "once":"false" },
+    "keywords":"блог психолога РХП, статті про розлади харчової поведінки, образ тіла статті",
+    "description":"Статті клінічної психологині про розлади харчової поведінки, образ тіла, дієти, переїдання та підтримку близьких.",
+    "active":"Блог"
+  }'
+>
+  <block name="header">
+    <include
+      src="@components/layout/header/header.html"
+      locals='{"active":"blog"}'
+    ></include>
+  </block>
+  <block name="main">
+    <include src="@components/pages/blog/blog.html" locals="{}"></include>
+  </block>
+  <block name="footer">
+    <include src="@components/layout/footer/footer.html" locals="{}"></include>
+  </block>
+  <block name="popup"></block>
+</template>

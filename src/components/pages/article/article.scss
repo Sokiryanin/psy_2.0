@@ -1,0 +1,509 @@
+// ═══════════════════════════════════════════════════════════════
+//  BLOG ARTICLE — сторінка окремої статті
+//  1. Ритм
+//  2. Прогрес читання
+//  3. Шапка
+//  4. Розкладка: зміст + текст
+//  5. Типографіка тексту (.prose)
+//  6. Підвал статті
+//  7. Ще почитати
+// ═══════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────────────────────
+// 1. Ритм
+// ───────────────────────────────────────────────────────────────
+
+.article-page {
+  @include adaptiveValue('--section-space', 100, 56);
+
+  &__related {
+    padding-top: var(--section-space);
+    padding-bottom: var(--section-space);
+    background-color: var(--surface-alt);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 2. ПРОГРЕС ЧИТАННЯ
+// ───────────────────────────────────────────────────────────────
+// Тонка смужка під хедером. На довгому тексті допомагає зрозуміти,
+// скільки лишилося, — без неї людина не бачить дна сторінки.
+
+.progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 250;
+  height: toRem(3);
+  background-color: transparent;
+  pointer-events: none;
+
+  &[hidden] {
+    display: none;
+  }
+
+  // .progress__bar
+
+  &__bar {
+    display: block;
+    height: 100%;
+    width: 0;
+    background-color: var(--sage);
+    transition: width 0.1s linear;
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 3. ШАПКА
+// ───────────────────────────────────────────────────────────────
+
+.article {
+  // .article__head
+
+  &__head {
+    @include adaptiveValue('padding-top', 170, 110);
+  }
+
+  // .article__back
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: toRem(10);
+    margin-bottom: toRem(32);
+    font-size: toRem(15);
+    color: var(--ink-soft);
+    transition: color 0.25s ease;
+
+    &::before {
+      content: '';
+      width: toRem(12);
+      height: toRem(12);
+      border-left: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg) translate(2px, -2px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: 3px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--sage);
+      }
+    }
+  }
+
+  // .article__category
+
+  &__category {
+    display: block;
+    margin-bottom: toRem(16);
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sage);
+  }
+
+  // .article__title
+
+  &__title {
+    max-width: toRem(940);
+    @include adaptiveValue('font-size', 60, 32);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: toRem(24);
+  }
+
+  // .article__lead
+
+  &__lead {
+    max-width: toRem(740);
+    @include adaptiveValue('font-size', 22, 18);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: toRem(28);
+  }
+
+  // .article__meta
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: toRem(12);
+    @include adaptiveValue('padding-bottom', 48, 32);
+    font-size: toRem(15);
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--border);
+  }
+
+  // .article__author
+
+  &__author {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  // .article__dot
+
+  &__dot {
+    width: toRem(3);
+    height: toRem(3);
+    border-radius: 50%;
+    background-color: var(--border);
+  }
+
+  // .article__cover
+
+  &__cover {
+    @include adaptiveValue('padding-top', 48, 32);
+  }
+
+  // .article__cover-img
+
+  &__cover-img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--r-lg);
+    background-color: var(--surface-alt);
+
+    @media (max-width: toEm($mobile)) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  // ───────────────────────────────────────────────────────────
+  // 4. РОЗКЛАДКА
+  // ───────────────────────────────────────────────────────────
+
+  // .article__body
+
+  &__body {
+    @include adaptiveValue('padding-top', 72, 44);
+    @include adaptiveValue('padding-bottom', 72, 44);
+  }
+
+  // .article__layout
+
+  &__layout {
+    display: grid;
+    grid-template-columns: toRem(240) minmax(0, 1fr);
+    @include adaptiveValue('gap', 72, 40);
+    align-items: start;
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: 1fr;
+      gap: toRem(32);
+    }
+  }
+
+  // .article__aside
+
+  &__aside {
+    position: sticky;
+    top: toRem(110);
+
+    @media (max-width: toEm($tablet)) {
+      position: static;
+    }
+  }
+
+  // .article__content
+
+  &__content {
+    max-width: toRem(760);
+  }
+
+  // ───────────────────────────────────────────────────────────
+  // 6. ПІДВАЛ СТАТТІ
+  // ───────────────────────────────────────────────────────────
+
+  // .article__footer
+
+  &__footer {
+    @include adaptiveValue('padding-bottom', 100, 56);
+  }
+
+  // .article__footer-inner
+
+  &__footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(16);
+    @include adaptiveValue('padding-top', 40, 28);
+    border-top: 1px solid var(--border);
+  }
+}
+
+// ── Зміст ────────────────────────────────────────────────────
+// Будується скриптом із заголовків h2 у тексті.
+
+.toc {
+  &[hidden] {
+    display: none;
+  }
+
+  // .toc__title
+
+  &__title {
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    padding-bottom: toRem(14);
+    margin-bottom: toRem(14);
+    border-bottom: 1px solid var(--border);
+  }
+
+  // .toc__list
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(2);
+  }
+
+  // .toc__item
+
+  &__item {
+  }
+
+  // .toc__link
+
+  &__link {
+    display: block;
+    padding: toRem(8) toRem(14);
+    border-left: 2px solid var(--border);
+    font-size: toRem(15);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: -2px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--ink);
+      }
+    }
+
+    // .toc__link--active
+
+    &--active {
+      color: var(--sage);
+      border-left-color: var(--sage);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 5. ТИПОГРАФІКА ТЕКСТУ
+// ───────────────────────────────────────────────────────────────
+// Клас для вмісту, який приходить із CMS: розмітка там генерується
+// автоматично, тому стилі вішаються на теги, а не на класи.
+
+.prose {
+  @include adaptiveValue('font-size', 19, 17);
+  line-height: 1.75;
+  color: var(--ink-soft);
+
+  p {
+    &:not(:last-child) {
+      margin-bottom: toRem(22);
+    }
+  }
+
+  h2 {
+    @include adaptiveValue('font-size', 34, 25);
+    line-height: 1.2;
+    color: var(--ink);
+    scroll-margin-top: toRem(110);
+    @include adaptiveValue('margin-top', 56, 36);
+    margin-bottom: toRem(18);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h3 {
+    font-family: var(--font-sans);
+    @include adaptiveValue('font-size', 21, 18);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink);
+    @include adaptiveValue('margin-top', 36, 26);
+    margin-bottom: toRem(12);
+  }
+
+  ul,
+  ol {
+    @include adaptiveValue('margin-top', 24, 18);
+    @include adaptiveValue('margin-bottom', 24, 18);
+    display: flex;
+    flex-direction: column;
+    gap: toRem(10);
+  }
+
+  li {
+    position: relative;
+    padding-left: toRem(24);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: toRem(12);
+      width: toRem(6);
+      height: toRem(6);
+      border-radius: 50%;
+      background-color: var(--sage);
+    }
+  }
+
+  ol {
+    counter-reset: prose-list;
+
+    li {
+      counter-increment: prose-list;
+      padding-left: toRem(32);
+
+      &::before {
+        content: counter(prose-list) '.';
+        top: 0;
+        width: auto;
+        height: auto;
+        border-radius: 0;
+        background: none;
+        font-weight: 600;
+        color: var(--sage);
+      }
+    }
+  }
+
+  blockquote {
+    @include adaptiveValue('margin-top', 40, 28);
+    @include adaptiveValue('margin-bottom', 40, 28);
+    @include adaptiveValue('padding-left', 32, 20);
+    border-left: 2px solid var(--sage);
+
+    p {
+      font-family: var(--font-serif);
+      @include adaptiveValue('font-size', 26, 20);
+      line-height: 1.4;
+      color: var(--ink);
+      margin-bottom: 0;
+    }
+  }
+
+  figure {
+    @include adaptiveValue('margin-top', 44, 30);
+    @include adaptiveValue('margin-bottom', 44, 30);
+
+    img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      border-radius: var(--r-md);
+      background-color: var(--surface-alt);
+    }
+  }
+
+  figcaption {
+    margin-top: toRem(12);
+    font-size: toRem(14);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  a:not(.btn) {
+    color: var(--sage);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--sage-hover);
+      }
+    }
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  hr {
+    @include adaptiveValue('margin-top', 48, 32);
+    @include adaptiveValue('margin-bottom', 48, 32);
+    height: 1px;
+    background-color: var(--border);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 7. ЩЕ ПОЧИТАТИ
+// ───────────────────────────────────────────────────────────────
+
+.related {
+  // .related__blockhead
+
+  &__blockhead {
+    @include adaptiveValue('margin-bottom', 48, 32);
+  }
+
+  // .related__grid
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include adaptiveValue('gap', 28, 18);
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .related__item
+
+  &__item {
+    @media (max-width: toEm($tablet)) {
+      &:last-child {
+        display: none;
+      }
+    }
+
+    @media (max-width: toEm($mobile)) {
+      &:last-child {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress__bar,
+  .toc__link {
+    transition: none;
+  }
+}

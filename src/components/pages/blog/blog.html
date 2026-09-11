@@ -1,0 +1,238 @@
+<div data-fls-blog class="page blog-page">
+  <!-- ═══════════════ 1. INTRO ═══════════════ -->
+  <section class="blog-page__intro bl-intro">
+    <div class="bl-intro__container">
+      <div data-fls-blockhead class="bl-intro__blockhead blockhead">
+        <span class="blockhead__label">Блог · Журнал</span>
+        <h1 class="blockhead__title">
+          Про їжу, тіло <span class="blockhead__accent">і те, що за ними</span>
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 2. LIST ═══════════════ -->
+  <section class="blog-page__list bl-list">
+    <div class="bl-list__container">
+      <!--
+        Фільтр за категоріями.
+        CMS: список формується з усіх категорій, що мають хоча б
+        одну опубліковану статтю. Значення data-filter = category.slug
+      -->
+      <div data-fls-blog-filter class="bl-list__filter filter" hidden>
+        <div class="filter__scroll" role="group" aria-label="Фільтр за темою">
+          <button
+            type="button"
+            data-filter="all"
+            aria-pressed="true"
+            class="filter__chip"
+          >
+            Усі теми
+          </button>
+          <button
+            type="button"
+            data-filter="rhp"
+            aria-pressed="false"
+            class="filter__chip"
+          >
+            РХП
+          </button>
+          <button
+            type="button"
+            data-filter="body"
+            aria-pressed="false"
+            class="filter__chip"
+          >
+            Образ тіла
+          </button>
+          <button
+            type="button"
+            data-filter="food"
+            aria-pressed="false"
+            class="filter__chip"
+          >
+            Стосунки з їжею
+          </button>
+          <button
+            type="button"
+            data-filter="parents"
+            aria-pressed="false"
+            class="filter__chip"
+          >
+            Для батьків
+          </button>
+          <button
+            type="button"
+            data-filter="teens"
+            aria-pressed="false"
+            class="filter__chip"
+          >
+            Підлітки
+          </button>
+        </div>
+
+        <p data-fls-blog-count class="filter__count" aria-live="polite"></p>
+      </div>
+
+      <!--
+        CMS: цикл по post.
+        Поля: coverImage, category.title, category.slug, title, slug,
+        readingTime, publishedAt
+      -->
+      <ul data-fls-blog-grid class="bl-list__grid">
+        <li data-category="rhp" class="bl-list__item post-card">
+          <a href="/article.html" class="post-card__link">
+            <span class="post-card__media">
+              <img
+                src="@img/blog/post-01.jpg"
+                alt=""
+                loading="lazy"
+                class="post-card__img"
+              />
+            </span>
+            <span class="post-card__category">РХП</span>
+            <h2 class="post-card__title">
+              Чому «просто почати нормально їсти» не працює
+            </h2>
+            <span class="post-card__meta">
+              <time datetime="2026-08-28">28 серпня 2026</time>
+              <span class="post-card__dot" aria-hidden="true"></span>
+              <span>7 хв</span>
+            </span>
+          </a>
+        </li>
+
+        <li data-category="body" class="bl-list__item post-card">
+          <a href="/article.html" class="post-card__link">
+            <span class="post-card__media">
+              <img
+                src="@img/blog/post-02.jpg"
+                alt=""
+                loading="lazy"
+                class="post-card__img"
+              />
+            </span>
+            <span class="post-card__category">Образ тіла</span>
+            <h2 class="post-card__title">
+              Дзеркало, фото, порівняння: як влаштована перевірка тіла
+            </h2>
+            <span class="post-card__meta">
+              <time datetime="2026-08-14">14 серпня 2026</time>
+              <span class="post-card__dot" aria-hidden="true"></span>
+              <span>6 хв</span>
+            </span>
+          </a>
+        </li>
+
+        <li data-category="parents" class="bl-list__item post-card">
+          <a href="/article.html" class="post-card__link">
+            <span class="post-card__media">
+              <img
+                src="@img/blog/post-03.jpg"
+                alt=""
+                loading="lazy"
+                class="post-card__img"
+              />
+            </span>
+            <span class="post-card__category">Для батьків</span>
+            <h2 class="post-card__title">
+              Про що краще не говорити з підлітком за столом
+            </h2>
+            <span class="post-card__meta">
+              <time datetime="2026-07-30">30 липня 2026</time>
+              <span class="post-card__dot" aria-hidden="true"></span>
+              <span>8 хв</span>
+            </span>
+          </a>
+        </li>
+
+        <li data-category="food" class="bl-list__item post-card">
+          <a href="/article.html" class="post-card__link">
+            <span class="post-card__media">
+              <img
+                src="@img/blog/post-04.jpg"
+                alt=""
+                loading="lazy"
+                class="post-card__img"
+              />
+            </span>
+            <span class="post-card__category">Стосунки з їжею</span>
+            <h2 class="post-card__title">
+              Емоційне переїдання: що насправді за ним стоїть
+            </h2>
+            <span class="post-card__meta">
+              <time datetime="2026-07-16">16 липня 2026</time>
+              <span class="post-card__dot" aria-hidden="true"></span>
+              <span>5 хв</span>
+            </span>
+          </a>
+        </li>
+
+        <li data-category="rhp" class="bl-list__item post-card">
+          <a href="/article.html" class="post-card__link">
+            <span class="post-card__media">
+              <img
+                src="@img/blog/post-05.jpg"
+                alt=""
+                loading="lazy"
+                class="post-card__img"
+              />
+            </span>
+            <span class="post-card__category">РХП</span>
+            <h2 class="post-card__title">
+              Компульсивне переїдання — це не про силу волі
+            </h2>
+            <span class="post-card__meta">
+              <time datetime="2026-06-25">25 червня 2026</time>
+              <span class="post-card__dot" aria-hidden="true"></span>
+              <span>6 хв</span>
+            </span>
+          </a>
+        </li>
+
+        <li data-category="teens" class="bl-list__item post-card">
+          <a href="/article.html" class="post-card__link">
+            <span class="post-card__media">
+              <img
+                src="@img/blog/post-06.jpg"
+                alt=""
+                loading="lazy"
+                class="post-card__img"
+              />
+            </span>
+            <span class="post-card__category">Підлітки</span>
+            <h2 class="post-card__title">
+              Коли захоплення здоровим харчуванням перестає бути здоровим
+            </h2>
+            <span class="post-card__meta">
+              <time datetime="2026-06-11">11 червня 2026</time>
+              <span class="post-card__dot" aria-hidden="true"></span>
+              <span>7 хв</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Показується, коли під фільтр нічого не підпадає -->
+      <p data-fls-blog-empty class="bl-list__empty" hidden>
+        За цією темою статей поки немає.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ 3. CTA ═══════════════ -->
+  <section class="blog-page__cta cta">
+    <div class="cta__container">
+      <div class="cta__inner">
+        <h2 class="cta__title">Стаття не замінює роботу з психологом</h2>
+        <p class="cta__text">
+          Якщо ви впізнали себе в прочитаному — наступний крок це розмова про
+          вашу конкретну ситуацію.
+        </p>
+        <a href="/contacts.html" class="btn btn--primary btn--lg"
+          >Записатися на консультацію</a
+        >
+      </div>
+    </div>
+  </section>
+</div>

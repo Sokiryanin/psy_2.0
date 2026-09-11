@@ -1,0 +1,332 @@
+// ═══════════════════════════════════════════════════════════════
+//  BLOG — сторінка списку статей
+//  1. Ритм секцій
+//  2. Intro
+//  3. Фільтр за темами
+//  4. Сітка карток
+//  5. CTA
+// ═══════════════════════════════════════════════════════════════
+
+// ───────────────────────────────────────────────────────────────
+// 1. Ритм
+// ───────────────────────────────────────────────────────────────
+
+.blog-page {
+  @include adaptiveValue('--section-space', 120, 64);
+
+  > section {
+    padding-top: var(--section-space);
+    padding-bottom: var(--section-space);
+  }
+
+  > .blog-page__intro {
+    @include adaptiveValue('padding-top', 180, 120);
+    padding-bottom: 0;
+  }
+
+  &__list {
+    @include adaptiveValue('padding-top', 56, 36);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 2. INTRO
+// ───────────────────────────────────────────────────────────────
+
+.bl-intro {
+  // .bl-intro__blockhead
+
+  &__blockhead {
+    max-width: toRem(1000);
+    margin-bottom: 0;
+
+    .blockhead__title {
+      @include adaptiveValue('font-size', 88, 40);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+  }
+}
+
+// Другий рядок заголовка акцентом — як у референсі
+.blockhead__accent {
+  color: var(--sage);
+}
+
+// ───────────────────────────────────────────────────────────────
+// 3. ФІЛЬТР
+// ───────────────────────────────────────────────────────────────
+// Прихований у розмітці, показує його скрипт. Без JS кнопки були б
+// мертвими, а всі статті й так видно нижче.
+
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: toRem(16);
+  @include adaptiveValue('margin-bottom', 48, 28);
+  @include adaptiveValue('padding-bottom', 24, 18);
+  border-bottom: 1px solid var(--border);
+
+  // .filter__scroll
+
+  &__scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: toRem(8);
+
+    // На телефоні — горизонтальна стрічка замість переносу,
+    // інакше чипи займають половину екрана
+    @media (max-width: toEm($mobile)) {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      margin-inline: calc(var(--fl-bleed, #{toRem(15)}) * -1);
+      padding-inline: var(--fl-bleed, #{toRem(15)});
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  // .filter__chip
+
+  &__chip {
+    flex: 0 0 auto;
+    padding: toRem(9) toRem(18);
+    border-radius: 100px;
+    font-size: toRem(15);
+    line-height: 1.3;
+    white-space: nowrap;
+    color: var(--ink-soft);
+    box-shadow: inset 0 0 0 1px var(--border);
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      box-shadow 0.25s ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: 2px;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: var(--ink);
+        box-shadow: inset 0 0 0 1px var(--ink-soft);
+      }
+    }
+
+    &[aria-pressed='true'] {
+      background-color: var(--sage);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px var(--sage);
+    }
+  }
+
+  // .filter__count
+
+  &__count {
+    flex: 0 0 auto;
+    font-size: toRem(14);
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 4. СІТКА
+// ───────────────────────────────────────────────────────────────
+
+.bl-list {
+  // .bl-list__grid
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include adaptiveValue('column-gap', 28, 18);
+    @include adaptiveValue('row-gap', 56, 36);
+
+    @media (max-width: toEm($tablet)) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: toEm($mobile)) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // .bl-list__item
+
+  &__item {
+    // Приховування фільтром
+    &[data-filtered-out] {
+      display: none;
+    }
+  }
+
+  // .bl-list__empty
+
+  &__empty {
+    @include adaptiveValue('padding-top', 56, 36);
+    @include adaptiveValue('padding-bottom', 56, 36);
+    text-align: center;
+    @include adaptiveValue('font-size', 20, 17);
+    color: var(--ink-soft);
+  }
+}
+
+// ── Картка статті ────────────────────────────────────────────
+// Без рамки й фону: картинка сама тримає картку, як у референсі.
+
+.post-card {
+  // .post-card__link
+
+  &__link {
+    display: block;
+    width: 100%;
+
+    &:focus-visible {
+      outline: 2px solid var(--sage);
+      outline-offset: 6px;
+      border-radius: var(--r-sm);
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        .post-card__img {
+          transform: scale(1.04);
+        }
+
+        .post-card__title {
+          color: var(--sage);
+        }
+      }
+    }
+  }
+
+  // .post-card__media
+
+  &__media {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    background-color: var(--surface-alt);
+    margin-bottom: toRem(18);
+  }
+
+  // .post-card__img
+
+  &__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // .post-card__category
+
+  &__category {
+    display: block;
+    margin-bottom: toRem(10);
+    font-size: toRem(12);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sage);
+  }
+
+  // .post-card__title
+
+  &__title {
+    @include adaptiveValue('font-size', 24, 20);
+    line-height: 1.3;
+    margin-bottom: toRem(12);
+    transition: color 0.25s ease;
+  }
+
+  // .post-card__meta
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: toRem(10);
+    font-size: toRem(14);
+    color: var(--ink-soft);
+  }
+
+  // .post-card__dot
+
+  &__dot {
+    width: toRem(3);
+    height: toRem(3);
+    border-radius: 50%;
+    background-color: var(--border);
+  }
+}
+
+// ───────────────────────────────────────────────────────────────
+// 5. CTA
+// ───────────────────────────────────────────────────────────────
+
+.cta {
+  // .cta__inner
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    @include adaptiveValue('padding-top', 88, 48);
+    @include adaptiveValue('padding-bottom', 88, 48);
+    @include adaptiveValue('padding-left', 40, 24);
+    @include adaptiveValue('padding-right', 40, 24);
+    border-radius: var(--r-lg);
+    background-color: var(--sage);
+    color: #fff;
+  }
+
+  // .cta__title
+
+  &__title {
+    max-width: toRem(680);
+    @include adaptiveValue('font-size', 44, 28);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: toRem(16);
+  }
+
+  // .cta__text
+
+  &__text {
+    max-width: toRem(520);
+    @include adaptiveValue('font-size', 18, 16);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: toRem(36);
+  }
+
+  .btn--primary {
+    background-color: #fff;
+    color: var(--sage);
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.88);
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card__img,
+  .post-card__title,
+  .filter__chip {
+    transition: none;
+  }
+}
